@@ -1,37 +1,16 @@
-// ImageCard.jsx
-import React, { useState, useEffect } from 'react';
-import { getPhoto } from '../../api';
+import React from 'react';
 
 const ImageCard = ({ photo }) => {
-  const [image, setImage] = useState({});
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchImage = async () => {
-      try {
-        const image = await getPhoto(photo.id);
-        setImage(image);
-      } catch (error) {
-        setError(error.message);
-      }
-    };
-    fetchImage();
-  }, [photo.id]);
-
-  if (error) {
-    return (
-      <div>
-        <p>Error: {error}</p>
-      </div>
-    );
-  }
-
   return (
-    <div>
-      <img src={image.urls?.regular} alt={image.alt_description} />
-      <div>
-        {image.user?.name ? (
-          <p>Photo by {image.user.name}</p>
+    <div className="relative flex-shrink-0 w-full md:w-1/2 xl:w-1/3 p-2">
+      <img
+        src={photo.urls.regular}
+        alt={photo.alt_description}
+        className="object-cover w-full h-full"
+      />
+      <div className="absolute bottom-0 left-0 p-4 text-white bg-black bg-opacity-50">
+        {photo.user?.name ? (
+          <p>Photo by {photo.user.name}</p>
         ) : (
           <p>Unknown author</p>
         )}
